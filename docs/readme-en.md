@@ -22,7 +22,9 @@ This is a **universal template** for AI coding agents. It provides:
 
 | Component | Purpose |
 |-----------|---------|
-| `AGENTS.md` | Main configuration file with project conventions |
+| `AGENTS.md` | Agent behavior rules (doc/commit policy, code standards, forbidden patterns) |
+| `CODEBASE_STATE.md` | Living map of project facts — tech stack, architecture, conventions, registries |
+| `docs/TROUBLESHOOTING.md` | Known issues and their fixes |
 | `.agents/skills/` | Domain-specific knowledge for common tasks |
 
 ### Key Features
@@ -62,10 +64,11 @@ The AI agent will automatically read `AGENTS.md` when working in your project.
 
 ### Next Steps
 
-1. **Fill in the Tech Stack** section in `AGENTS.md`
-2. **Define naming conventions** for your project
-3. **Configure state management** rules
-4. **Set API conventions** if applicable
+1. **Fill in the Tech Stack** section in `CODEBASE_STATE.md`
+2. **Define naming conventions** for your project in `AGENTS.md`
+3. **Configure state management** rules in `CODEBASE_STATE.md`
+4. **Set API conventions** if applicable in `CODEBASE_STATE.md`
+5. **Note known issues or fixes** in `docs/TROUBLESHOOTING.md`
 
 ---
 
@@ -73,10 +76,10 @@ The AI agent will automatically read `AGENTS.md` when working in your project.
 
 ### 1. Tech Stack
 
-Update the **Tech Stack** table in `AGENTS.md`:
+Update the **Tech Stack** table in `CODEBASE_STATE.md`:
 
 ```markdown
-## 2. Tech Stack (hard constraints)
+## 2. Tech Stack
 
 | Layer        | Choice | Notes |
 |------------|--------|-------|
@@ -90,10 +93,10 @@ Update the **Tech Stack** table in `AGENTS.md`:
 
 ### 2. Naming Conventions
 
-Define your project's naming standards:
+Define your project's naming standards in `AGENTS.md`:
 
 ```markdown
-## 8. Naming Conventions
+## 6. Naming Conventions
 
 - **Files**: `kebab-case` (e.g., `user-profile.vue`)
 - **Components**: `PascalCase` (e.g., `UserProfile`)
@@ -104,10 +107,10 @@ Define your project's naming standards:
 
 ### 3. Code Standards
 
-Set quality rules:
+Set quality rules in `AGENTS.md`:
 
 ```markdown
-## 5. Code Standards
+## 3. Code Standards
 
 ### TypeScript Basics
 
@@ -124,10 +127,10 @@ Set quality rules:
 
 ### 4. State Management
 
-Document your state approach:
+Document your state approach in `CODEBASE_STATE.md`:
 
 ```markdown
-## 11. State Management
+## 12. State Management
 
 Stores are in `src/store/`:
 
@@ -147,9 +150,9 @@ When multiple AI agents collaborate, follow these protocols:
 Before starting any feature:
 
 ```
-- [ ] Read AGENTS.md §1–§12
-- [ ] Check CODEBASE_STATE.md for existing work
-- [ ] Check WIP section for claimed areas
+- [ ] Read AGENTS.md §0–§7
+- [ ] Check CODEBASE_STATE.md's Directory Map for existing work
+- [ ] Check docs/WIP.md for claimed areas
 ```
 
 ### 2. Claim Ownership
@@ -157,7 +160,7 @@ Before starting any feature:
 When working on a multi-turn feature:
 
 ```
-Starting work on [feature-name]. Claiming §16 WIP row for [feature].
+Starting work on [feature-name]. Claiming a WIP row in docs/WIP.md for [feature].
 ```
 
 This prevents other agents from working on the same area.
@@ -167,9 +170,9 @@ This prevents other agents from working on the same area.
 When the user asks for a commit:
 
 ```
-- Update Change Log (§14)
-- Add Decision Log if needed (§13.10)
-- Update directory map if structure changed (§13.1)
+- Update CHANGELOG
+- Add a Decision Log row in CODEBASE_STATE.md if needed
+- Update CODEBASE_STATE.md's Directory Map if structure changed
 ```
 
 ### 4. Conflict Resolution
@@ -213,7 +216,7 @@ cp -r templates/vue3 /path/to/your-project/
 This template is designed for Claude Code. The agent will:
 
 1. Read `AGENTS.md` at project start
-2. Follow conventions in §1–§12
+2. Follow conventions in §0–§7
 3. Update `CODEBASE_STATE.md` only when asked
 4. Respect WIP claims from other agents
 

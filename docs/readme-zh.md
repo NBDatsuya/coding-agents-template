@@ -22,7 +22,9 @@
 
 | 组件 | 用途 |
 |------|------|
-| `AGENTS.md` | 项目规范主配置文件 |
+| `AGENTS.md` | 智能体行为规则（文档/提交策略、代码标准、禁止事项） |
+| `CODEBASE_STATE.md` | 项目事实的实时地图 —— 技术栈、架构、规范、注册表 |
+| `docs/TROUBLESHOOTING.md` | 已知问题及其修复方案 |
 | `.agents/skills/` | 领域知识库，用于常见任务 |
 
 ### 核心特性
@@ -62,10 +64,11 @@ AI 智能体工作时将自动读取项目根目录的 `AGENTS.md`。
 
 ### 下一步
 
-1. **填写技术栈** — 在 `AGENTS.md` 中填写 Tech Stack 部分
-2. **定义命名规范** — 为你的项目设置命名规则
-3. **配置状态管理** — 设置状态管理规则
-4. **设置 API 规范** — 如有需要，定义 API 约定
+1. **填写技术栈** — 在 `CODEBASE_STATE.md` 中填写 Tech Stack 部分
+2. **定义命名规范** — 在 `AGENTS.md` 中为你的项目设置命名规则
+3. **配置状态管理** — 在 `CODEBASE_STATE.md` 中设置状态管理规则
+4. **设置 API 规范** — 如有需要，在 `CODEBASE_STATE.md` 中定义 API 约定
+5. **记录已知问题** — 在 `docs/TROUBLESHOOTING.md` 中记录已知问题或修复方案
 
 ---
 
@@ -73,10 +76,10 @@ AI 智能体工作时将自动读取项目根目录的 `AGENTS.md`。
 
 ### 1. 技术栈
 
-更新 `AGENTS.md` 中的 **Tech Stack** 表格：
+更新 `CODEBASE_STATE.md` 中的 **Tech Stack** 表格：
 
 ```markdown
-## 2. 技术栈（硬约束）
+## 2. Tech Stack
 
 | 层级 | 选择 | 备注 |
 |------|------|------|
@@ -90,10 +93,10 @@ AI 智能体工作时将自动读取项目根目录的 `AGENTS.md`。
 
 ### 2. 命名规范
 
-定义项目的命名标准：
+在 `AGENTS.md` 中定义项目的命名标准：
 
 ```markdown
-## 8. 命名规范
+## 6. Naming Conventions
 
 - **文件**：`kebab-case`（如 `user-profile.vue`）
 - **组件**：`PascalCase`（如 `UserProfile`）
@@ -104,10 +107,10 @@ AI 智能体工作时将自动读取项目根目录的 `AGENTS.md`。
 
 ### 3. 代码标准
 
-设置质量规则：
+在 `AGENTS.md` 中设置质量规则：
 
 ```markdown
-## 5. 代码标准
+## 3. Code Standards
 
 ### TypeScript 基础
 
@@ -124,10 +127,10 @@ AI 智能体工作时将自动读取项目根目录的 `AGENTS.md`。
 
 ### 4. 状态管理
 
-文档化你的状态管理方案：
+在 `CODEBASE_STATE.md` 中文档化你的状态管理方案：
 
 ```markdown
-## 11. 状态管理
+## 12. State Management
 
 状态库位于 `src/store/`：
 
@@ -147,9 +150,9 @@ AI 智能体工作时将自动读取项目根目录的 `AGENTS.md`。
 开始任何功能前：
 
 ```
-- [ ] 阅读 AGENTS.md §1–§12
-- [ ] 查看 CODEBASE_STATE.md 了解现有工作
-- [ ] 查看 WIP 部分了解已声明的区域
+- [ ] 阅读 AGENTS.md §0–§7
+- [ ] 查看 CODEBASE_STATE.md 的目录地图了解现有工作
+- [ ] 查看 docs/WIP.md 了解已声明的区域
 ```
 
 ### 2. 声明所有权
@@ -157,7 +160,7 @@ AI 智能体工作时将自动读取项目根目录的 `AGENTS.md`。
 当处理多轮对话的功能时：
 
 ```
-开始处理 [功能名]。声明 §16 WIP 行用于 [功能]。
+开始处理 [功能名]。在 docs/WIP.md 中声明一行 WIP 用于 [功能]。
 ```
 
 这可以防止其他智能体同时处理同一区域。
@@ -167,9 +170,9 @@ AI 智能体工作时将自动读取项目根目录的 `AGENTS.md`。
 当用户要求提交时：
 
 ```
-- 更新变更日志 (§14)
-- 如有需要添加决策日志 (§13.10)
-- 如结构变更则更新目录图 (§13.1)
+- 更新 CHANGELOG
+- 如有需要在 CODEBASE_STATE.md 中添加决策日志
+- 如结构变更则更新 CODEBASE_STATE.md 的目录地图
 ```
 
 ### 4. 冲突解决
@@ -213,7 +216,7 @@ cp -r templates/vue3 /path/to/your-project/
 本模板专为 Claude Code 设计。智能体将：
 
 1. 项目开始时读取 `AGENTS.md`
-2. 遵循 §1–§12 中的规范
+2. 遵循 §0–§7 中的规范
 3. 仅在用户要求时更新 `CODEBASE_STATE.md`
 4. 尊重其他智能体的 WIP 声明
 
