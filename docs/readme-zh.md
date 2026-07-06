@@ -42,7 +42,7 @@
 
 ```bash
 # 1. 克隆模板
-git clone https://github.com/yourname/ai-agents-template.git your-project
+git clone https://github.com/NBDatsuya/coding-agents-template.git your-project
 cd your-project
 
 # 2. 清除 git 历史（全新开始）
@@ -57,7 +57,7 @@ git init
 
 ```bash
 # 仅复制 AGENTS.md 文件
-curl -O https://raw.githubusercontent.com/yourname/ai-agents-template/main/AGENTS.md
+curl -O https://raw.githubusercontent.com/NBDatsuya/coding-agents-template/main/AGENTS.md
 ```
 
 AI 智能体工作时将自动读取项目根目录的 `AGENTS.md`。
@@ -200,8 +200,8 @@ AI 智能体工作时将自动读取项目根目录的 `AGENTS.md`。
 
 ```bash
 # 克隆完整仓库
-git clone https://github.com/yourname/ai-agents-template.git
-cd ai-agents-template
+git clone https://github.com/NBDatsuya/coding-agents-template.git
+cd coding-agents-template
 
 # 复制特定模板
 cp -r templates/vue3 /path/to/your-project/

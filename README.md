@@ -24,7 +24,7 @@
 
 ```bash
 # Clone and start
-git clone https://github.com/yourname/ai-agents-template.git your-project
+git clone https://github.com/NBDatsuya/coding-agents-template.git your-project
 cd your-project
 rm -rf .git
 git init

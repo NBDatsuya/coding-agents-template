@@ -42,7 +42,7 @@ This is a **universal template** for AI coding agents. It provides:
 
 ```bash
 # 1. Clone this template
-git clone https://github.com/yourname/ai-agents-template.git your-project
+git clone https://github.com/NBDatsuya/coding-agents-template.git your-project
 cd your-project
 
 # 2. Remove git history (start fresh)
@@ -57,7 +57,7 @@ git init
 
 ```bash
 # Copy just the AGENTS.md file
-curl -O https://raw.githubusercontent.com/yourname/ai-agents-template/main/AGENTS.md
+curl -O https://raw.githubusercontent.com/NBDatsuya/coding-agents-template/main/AGENTS.md
 ```
 
 The AI agent will automatically read `AGENTS.md` when working in your project.
@@ -200,8 +200,8 @@ This repository contains templates for different technologies:
 
 ```bash
 # Clone the full repo
-git clone https://github.com/yourname/ai-agents-template.git
-cd ai-agents-template
+git clone https://github.com/NBDatsuya/coding-agents-template.git
+cd coding-agents-template
 
 # Copy a specific template
 cp -r templates/vue3 /path/to/your-project/
