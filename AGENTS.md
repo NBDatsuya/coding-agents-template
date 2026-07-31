@@ -29,6 +29,7 @@
   - `feat(auth): add login page`
   - `fix: resolve data fetch bug`
   - `docs: update README`
+- **Atomic commits.** Each commit must represent one cohesive, self-contained logical change. Do not bundle unrelated fixes, refactors, or features into the same commit. Split changes when they touch multiple independent areas.
 
 ### The Contract
 
@@ -118,6 +119,12 @@ Do not proactively refactor or optimize unrelated code.
 - **Modularity.** Separate concerns: data fetching, rendering, UI controls.
 - **Consistent naming.** Follow §6 naming conventions.
 
+### TypeScript Iteration Conventions
+
+- **Array iteration.** Prefer chainable methods (`forEach`, `map`, `filter`, `reduce`, `some`, `every`, etc.) over raw `for` loops unless performance is critical in hot paths. Chainable methods express intent more clearly and reduce mutative side effects.
+- **Object iteration.** Prefer `Object.entries()` combined with array methods over `for...in` loops. Avoid `for...in` due to prototype chain pitfalls; use `Object.keys()` or `Object.entries()` with explicit type guards when needed.
+- **Plain `for` loops.** Only use when you need to break early, need index arithmetic, or are in a performance-sensitive section. Document the reason if it's not obvious.
+
 ---
 
 ## 4. Forbidden
@@ -127,11 +134,13 @@ Do not proactively refactor or optimize unrelated code.
 - Direct DOM manipulation outside the framework's reactivity system.
 - Unnamed magic numbers scattered in code.
 - Blocking operations on the main thread.
-- **Running the project / opening any file yourself after finishing a task — the user runs it.** (Exception: the user may **explicitly** ask you to start the dev server; when they do, run it in the background so the tool call doesn't block.)
+- **Running the project / opening any file / running builds yourself after finishing a task — the user runs it.** (Exception: the user may **explicitly** ask you to start the dev server; when they do, run it in the background so the tool call doesn't block. And short-time linters and type-check-only commands such as vue-tsc or lint checks are also acceptable.)
 - Adding new dependencies without a Decision Log entry in `CODEBASE_STATE.md`.
 - Silent renames of exported symbols, route names, store names, or API endpoints.
 - Auto-installing packages without user confirmation.
 - Co-author trailers in commit messages.
+- Read any config files (`.env`, `.yaml`, `.yml`, etc.) unless they are sample files with `.example` suffix (e.g., `.yaml.example`, `.env.example`).
+- Compress any doc documents.
 
 ---
 
@@ -142,9 +151,15 @@ Do not proactively refactor or optimize unrelated code.
 - When asked to research or explain, do not edit code.
 - When asked to implement, follow the Read-before-write checklist in §0.
 
-### Skills (domain knowledge documents)
+### Skills (Domain Knowledge Documents)
 
-`.agents/skills/` contains reusable domain knowledge and operational guides. Agents do **not** auto-load these files — read them **on demand** based on task context.
+Skills are reusable domain-knowledge documents that agents load **on demand** using the `skill` tool (in Kilo Code) or by reading the file directly (in other agents). These files are stored under `.agents/skills/<domain>/SKILL.md`.
+
+- The `.agents/skills/` directory contains reusable domain knowledge and operational guides. Agents do **not** auto-load these files — they should be read **on demand** based on the task context.
+- A single task may match multiple skills. In such cases, load all relevant skills before writing any code.
+- When adding a new skill, place the file under `.agents/skills/<domain>/` and ensure that the agent's skill registry (e.g., Kilo Code's `available_skills` configuration) includes a reference to it.
+
+If a skill registry is not provided, fill in the table below:
 
 | Trigger | Skill file | Description |
 | ------- | ---------- | ----------- |
@@ -152,9 +167,9 @@ Do not proactively refactor or optimize unrelated code.
 
 **Rules:**
 
-- When adding a new skill, create the file under `.agents/skills/<domain>/` and register a trigger row in this table.
-- Skill files may include YAML frontmatter (`name` / `description`) for future tooling.
-- A task may match multiple skills — read all matching ones before writing code.
+- When introducing a new skill, create the corresponding file under `.agents/skills/<domain>/` and add a trigger row to the table above.
+- Skill files may include YAML frontmatter with `name` and `description` fields to support future tooling.
+- A task may match multiple skills — be sure to read all matching skills before writing code.
 
 ---
 
