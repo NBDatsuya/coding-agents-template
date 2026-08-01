@@ -1,6 +1,6 @@
 # AGENTS.md
 
-> Behavior rules for AI coding agents on [project_name]. Project facts (tech stack, architecture, conventions) live in `CODEBASE_STATE.md` — see §7.
+> Behavior rules for AI coding agents on [project_name]. Project facts (tech stack, architecture, conventions) live in `CODEBASE_STATE.md` — see §8.
 >
 > You **must** write in English only in AGENTS.md.
 
@@ -33,7 +33,7 @@
 
 ### The Contract
 
-1. **Before coding**, skim §1–§6 once per session, then read `CODEBASE_STATE.md`'s Directory Map and `docs/WIP.md` for anything relevant to your task.
+1. **Before coding**, skim §1–§7 once per session, then read `CODEBASE_STATE.md`'s Directory Map and `docs/WIP.md` for anything relevant to your task.
 2. **While coding**, the canonical _registry_ of names is the code itself. Before adding a new key, confirm it doesn't exist in the relevant file — don't rely on docs for this.
 3. **After coding**, **do not edit any docs.** Keep a short mental (or scratchpad) list of what would need to change in `CODEBASE_STATE.md` / `CHANGELOG` so you can produce a clean batch when the user asks — then ask (per §0 above).
 4. **Pre-commit doc sync (user-initiated only).** When the user explicitly asks to update the codebase state, do all of:
@@ -117,7 +117,7 @@ Do not proactively refactor or optimize unrelated code.
 - **No magic numbers.** Define constants with meaningful names.
 - **Loop hygiene.** Avoid heavy logic in tight loops. Pre-compute when possible.
 - **Modularity.** Separate concerns: data fetching, rendering, UI controls.
-- **Consistent naming.** Follow §6 naming conventions.
+- **Consistent naming.** Follow §7 naming conventions.
 
 ### TypeScript Iteration Conventions
 
@@ -151,29 +151,29 @@ Do not proactively refactor or optimize unrelated code.
 - When asked to research or explain, do not edit code.
 - When asked to implement, follow the Read-before-write checklist in §0.
 
-### Skills (Domain Knowledge Documents)
+---
 
-Skills are reusable domain-knowledge documents that agents load **on demand** using the `skill` tool (in Kilo Code) or by reading the file directly (in other agents). These files are stored under `.agents/skills/<domain>/SKILL.md`.
+## 6. Skills
 
-- The `.agents/skills/` directory contains reusable domain knowledge and operational guides. Agents do **not** auto-load these files — they should be read **on demand** based on the task context.
-- A single task may match multiple skills. In such cases, load all relevant skills before writing any code.
-- When adding a new skill, place the file under `.agents/skills/<domain>/` and ensure that the agent's skill registry (e.g., Kilo Code's `available_skills` configuration) includes a reference to it.
+Skills use a **two-tier architecture**:
 
-If a skill registry is not provided, fill in the table below:
+1. **Source of truth**: `.agents/skills/<name>/SKILL.md` — agent-agnostic, shared across all agents and tooling.
+2. **Agent deployment**: On project initialization for a specific agent, skills are migrated to that agent's native discovery folder (e.g., `.kilo/skills/<name>/SKILL.md` for Kilo Code). The agent then auto-discovers and loads them via its native mechanism (no manual file reading).
 
-| Trigger | Skill file | Description |
-| ------- | ---------- | ----------- |
-| TODO    |            |             |
+**IMPORTANT: Always use the agent's native skill registration and discovery mechanism to load skills. Do NOT directly read skill files as plain documents.**
+
+For Kilo Code, this means skills deployed to `.kilo/skills/` are loaded via the `skill` tool, not via `read`/`grep`. Direct file reading bypasses the discovery system, wastes context tokens, and defeats the purpose of the skill abstraction.
 
 **Rules:**
 
-- When introducing a new skill, create the corresponding file under `.agents/skills/<domain>/` and add a trigger row to the table above.
-- Skill files may include YAML frontmatter with `name` and `description` fields to support future tooling.
-- A task may match multiple skills — be sure to read all matching skills before writing code.
+- When adding a new skill, create the file under `.agents/skills/<name>/SKILL.md` with `name` and `description` in YAML frontmatter.
+- When initializing a project for an agent (e.g., Kilo), copy all `.agents/skills/` entries into the agent's native skill directory (`.kilo/skills/`). The deployed copy is what the agent actually loads.
+- Do NOT edit deployed copies directly — edit the source in `.agents/skills/` and re-deploy.
+- A task may match multiple skills — load all matching ones before writing code.
 
 ---
 
-## 6. Naming Conventions
+## 7. Naming Conventions
 
 > TODO: Document naming conventions for your project.
 
@@ -187,7 +187,7 @@ If a skill registry is not provided, fill in the table below:
 
 ---
 
-## 7. Documentation Map
+## 8. Documentation Map
 
 This file covers agent _behavior_ only. Project _facts_ live elsewhere:
 
