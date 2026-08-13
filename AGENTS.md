@@ -1,22 +1,22 @@
 # AGENTS.md
 
-> Behavior rules for AI coding agents on [project_name]. Project facts (tech stack, architecture, conventions) live in `CODEBASE_STATE.md` — see §8.
+> Behavior rules for AI coding agents on [project_name]. Project facts (tech stack, architecture, conventions) live in `CODEBASE_STATE.md` — see §9.
 >
 > You **must** write in English only in AGENTS.md.
 
 ---
 
-## 0. Multi-agent Collaboration Protocol
+## §0. Multi-agent Collaboration Protocol
 
-### Doc Edit Policy (read this first)
+### 0.1 Doc Edit Policy (read this first)
 
 - **Do NOT modify `CODEBASE_STATE.md` during feature work.** Finish the code first. Do not bump "Last updated" dates, do not touch the Decision Log, do not move WIP rows in `docs/WIP.md` — not as part of the same turn you wrote the code.
 - **`CODEBASE_STATE.md` is edited only when the user explicitly asks**, typically right before they request a commit. Common phrasings that unlock doc edits: _"update the codebase state"_, _"sync the codebase state"_, _"prep for commit"_, _"fill in the change log"_. Without an explicit request, leave the doc alone.
-- **After finishing any add / modify / delete coding task, ask the user** whether they want `CHANGELOG`, `CODEBASE_STATE.md`, and/or a git commit updated now. Don't do these silently, and don't just wait passively either — surface the question so the user can decide.
+- **After finishing any add / modify / delete coding task, ask the user** whether they want `CHANGELOG`, `CODEBASE_STATE.md`, and/or a git commit updated now. Don't do these silently, and don't just wait passively either — surface the question so the user can decide. **Tip:** mention the `CCC` / `3C` shortcut so the user can trigger all three at once.
 - **When the user does ask**, batch all deferred updates from the session into one coherent edit in `CODEBASE_STATE.md` (see "Pre-commit doc sync" below). Still respect the other rules in this section (Decision Log rows for non-obvious trade-offs, etc.).
 - **`AGENTS.md` (this file) changes only when the user asks to change a rule.** Feature work never touches it.
 
-### Git Commit Policy
+### 0.2 Git Commit Policy
 
 - **All commit messages must be in English.** This includes subject line and body if any.
 - Use conventional commit format: `type(scope): description`
@@ -31,7 +31,7 @@
   - `docs: update README`
 - **Atomic commits.** Each commit must represent one cohesive, self-contained logical change. Do not bundle unrelated fixes, refactors, or features into the same commit. Split changes when they touch multiple independent areas.
 
-### The Contract
+### 0.3 The Contract
 
 1. **Before coding**, skim §1–§7 once per session, then read `CODEBASE_STATE.md`'s Directory Map and `docs/WIP.md` for anything relevant to your task.
 2. **While coding**, the canonical _registry_ of names is the code itself. Before adding a new key, confirm it doesn't exist in the relevant file — don't rely on docs for this.
@@ -42,7 +42,7 @@
    - If the Directory Map drifted at the _folder_ level, update it. Don't enumerate individual new files.
    - Update `docs/WIP.md` if the work claimed a multi-turn area: strikethrough the row when done. (Create the file on first use if it doesn't exist yet.)
 
-### Conflict-avoidance Rules
+### 0.4 Conflict-avoidance Rules
 
 - **Namespaces are unique.** Route paths, store names, service names, and component names must be unique globally. Check the relevant `CODEBASE_STATE.md` registry section before adding.
 - **One owner per feature.** When you start a multi-turn feature, note it in chat so other agents know you're claiming that area. The `docs/WIP.md` row lands during the next user-initiated doc sync.
@@ -50,7 +50,7 @@
 - **No silent deletes.** If you delete code, move the registry row to a `~~strikethrough~~` line at the end of the table rather than removing it.
 - **Atomic doc updates.** One feature → one coherent Decision Log / Change Log edit at commit time. Don't batch unrelated refactors into the same doc patch.
 
-### Read-before-write Checklist (copy into your plan)
+### 0.5 Read-before-write Checklist (copy into your plan)
 
 - [ ] Confirm the feature area in `CODEBASE_STATE.md`'s Directory Map and `docs/WIP.md`.
 - [ ] Grep relevant files for any new key you plan to add — confirm no collision.
@@ -59,7 +59,7 @@
 
 ---
 
-## 1. Role & Context
+## §1. Role & Context
 
 You are a smart AI developer proficient in **modern frontend development**. The mission is maintaining and extending this web application.
 
@@ -70,9 +70,9 @@ You are a smart AI developer proficient in **modern frontend development**. The 
 
 ---
 
-## 2. Development Workflow
+## §2. Development Workflow
 
-### Scope of Responsibilities
+### 2.1 Scope of Responsibilities
 
 Current mode is limited to:
 
@@ -83,7 +83,7 @@ Current mode is limited to:
 
 Do not proactively refactor or optimize unrelated code.
 
-### Operational Standards
+### 2.2 Operational Standards
 
 - **Communicate before modifying**: Before changing existing files, inform the user what you're about to change.
 - **Confirm dependencies**: Do not auto-install packages. List the required packages and wait for user confirmation.
@@ -91,35 +91,35 @@ Do not proactively refactor or optimize unrelated code.
 - **Requirement clarification**: When requirements are unclear, ask before writing code.
 - **Documentation sync**: See §0's proactive-ask rule — offer to sync docs and commit after finishing a coding task, don't wait to be asked and don't do it silently.
 
-### Framework Integration Rules
+### 2.3 Framework Integration Rules
 
 > TODO: Fill in framework-specific rules here.
 
 ---
 
-## 3. Code Standards
+## §3. Code Standards
 
-### TypeScript Basics
+### 3.1 TypeScript Basics
 
 - **No `var`.** Always `const`, `let` only when reassignment is real.
 - **No `any`.** Use `unknown` + narrowing, or define a real type.
 - **Typed props and emits.** All props typed with TypeScript; all events typed.
 - **Typed events.** When a payload becomes non-trivial, define a named type and use it at both ends.
 
-### Component Rules
+### 3.2 Component Rules
 
 - **Strict UI separation.** Components render UI **only**. No business logic in component files except for component-local state.
 - **Services are canonical.** All API calls go through services.
 - **Stores for shared state.** Cross-component state goes in state management stores.
 
-### Code Quality
+### 3.3 Code Quality
 
 - **No magic numbers.** Define constants with meaningful names.
 - **Loop hygiene.** Avoid heavy logic in tight loops. Pre-compute when possible.
 - **Modularity.** Separate concerns: data fetching, rendering, UI controls.
 - **Consistent naming.** Follow §7 naming conventions.
 
-### TypeScript Iteration Conventions
+### 3.4 TypeScript Iteration Conventions
 
 - **Array iteration.** Prefer chainable methods (`forEach`, `map`, `filter`, `reduce`, `some`, `every`, etc.) over raw `for` loops unless performance is critical in hot paths. Chainable methods express intent more clearly and reduce mutative side effects.
 - **Object iteration.** Prefer `Object.entries()` combined with array methods over `for...in` loops. Avoid `for...in` due to prototype chain pitfalls; use `Object.keys()` or `Object.entries()` with explicit type guards when needed.
@@ -127,7 +127,7 @@ Do not proactively refactor or optimize unrelated code.
 
 ---
 
-## 4. Forbidden
+## §4. Forbidden
 
 - `var`.
 - `any`. Use `unknown` + narrowing, or define a real type.
@@ -144,7 +144,7 @@ Do not proactively refactor or optimize unrelated code.
 
 ---
 
-## 5. Interaction Protocol
+## §5. Interaction Protocol
 
 - Before adding a feature, check `docs/WIP.md` to ensure no conflicts.
 - When the human describes a **visual or interaction requirement**, translate it directly into implementation — CSS classes, composable logic, component props — don't over-engineer.
@@ -153,7 +153,7 @@ Do not proactively refactor or optimize unrelated code.
 
 ---
 
-## 6. Skills
+## §6. Skills
 
 Skills use a **two-tier architecture**:
 
@@ -173,7 +173,7 @@ For Kilo Code, this means skills deployed to `.kilo/skills/` are loaded via the 
 
 ---
 
-## 7. Naming Conventions
+## §7. Naming Conventions
 
 > TODO: Document naming conventions for your project.
 
@@ -187,7 +187,19 @@ For Kilo Code, this means skills deployed to `.kilo/skills/` are loaded via the 
 
 ---
 
-## 8. Documentation Map
+## §8. Quick Commands
+
+### 8.1 CCC / 3C
+
+When the user inputs **`CCC`** or **`3C`**, execute the following three steps in order:
+
+1. **CHANGELOG** — Append entries per coherent change to `CHANGELOG` (newest first, `YYYY-MM-DD HH:MM` timestamp, Keep a Changelog format). Create on first use if absent.
+2. **CODEBASE** — Sync `CODEBASE_STATE.md` (Decision Log, Directory Map) and `docs/WIP.md` (strikethrough completed rows).
+3. **COMMIT** — Confirm the commit message with the user, then stage all changes and commit using conventional commit format.
+
+---
+
+## §9. Documentation Map
 
 This file covers agent _behavior_ only. Project _facts_ live elsewhere:
 

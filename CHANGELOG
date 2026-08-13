@@ -5,3 +5,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 _Update this file before commit. The timestamp should be in this format：YYYY-MM-DD HH:MM_
+
+## [Unreleased]
+
+- 2026-08-13 08:44 — docs(agents): add §8 Quick Commands with CCC/3C shortcut, number third-level headings, mention CCC in proactive-ask hook
